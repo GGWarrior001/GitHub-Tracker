@@ -7,65 +7,328 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* (your original CSS – unchanged for brevity) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: radial-gradient(circle at 10% 20%, #0a0c12, #030507); font-family: 'Inter', sans-serif; color: #eef2ff; line-height: 1.5; padding: 2rem 1.5rem; min-height: 100vh; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(circle at 10% 20%, #0a0c12, #030507);
+      font-family: 'Inter', sans-serif;
+      color: #eef2ff;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
     ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
     .glass-container { max-width: 1440px; margin: 0 auto; }
+
     .hero { text-align: center; margin-bottom: 2.5rem; }
-    .hero h1 { font-size: 2.6rem; font-weight: 700; background: linear-gradient(135deg, #ffffff, #94a3f8); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: -0.3px; display: inline-flex; align-items: center; gap: 12px; }
-    .hero h1 i { background: none; color: #3b82f6; font-size: 2.4rem; }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #94a3f8);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero h1 i { color: #3b82f6; font-size: 2.4rem; }
     .hero p { color: #9ca3af; margin-top: 0.5rem; font-weight: 400; }
-    .search-card { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(59,130,246,0.25); border-radius: 2rem; padding: 0.5rem 0.5rem 0.5rem 1.5rem; display: flex; align-items: center; gap: 0.8rem; max-width: 600px; margin: 0 auto 2rem auto; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4); transition: all 0.2s ease; }
-    .search-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
+
+    .search-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 2rem;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      max-width: 680px;
+      margin: 0 auto 2rem auto;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+      transition: all 0.2s ease;
+    }
+    .search-card:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+    }
     .search-card i { font-size: 1.3rem; color: #60a5fa; }
-    .search-card input { flex: 1; background: transparent; border: none; font-size: 1rem; padding: 0.8rem 0; color: #f1f5f9; font-weight: 500; outline: none; }
+
+    .search-card input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      padding: 0.8rem 0;
+      color: #f1f5f9;
+      font-weight: 500;
+      outline: none;
+      min-width: 0;
+    }
     .search-card input::placeholder { color: #6b7280; font-weight: 400; }
-    .search-card button { background: linear-gradient(105deg, #2563eb, #1e40af); border: none; padding: 0.7rem 1.4rem; border-radius: 2rem; font-weight: 600; font-size: 0.9rem; color: white; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; letter-spacing: 0.3px; }
-    .search-card button:hover { background: linear-gradient(105deg, #3b82f6, #1e3a8a); transform: scale(0.97); box-shadow: 0 4px 12px rgba(37,99,235,0.4); }
-    .card { background: rgba(18, 25, 45, 0.7); backdrop-filter: blur(4px); border-radius: 1.8rem; border: 1px solid rgba(71, 85, 105, 0.4); padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-    .profile-grid { display: flex; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; align-items: center; }
-    .avatar-section { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; flex: 2; }
-    .avatar-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #3b82f6; object-fit: cover; background: #1e293b; box-shadow: 0 15px 25px -10px rgba(0,0,0,0.5); }
-    .user-info h2 { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+
+    .search-card button {
+      background: linear-gradient(105deg, #2563eb, #1e40af);
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .search-card button:hover {
+      background: linear-gradient(105deg, #3b82f6, #1e3a8a);
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+    }
+    .search-card button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .card {
+      background: rgba(18, 25, 45, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 1.8rem;
+      border: 1px solid rgba(71, 85, 105, 0.4);
+      padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .profile-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+    .avatar-section {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      flex: 2;
+      min-width: 280px;
+    }
+    .avatar-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #3b82f6;
+      object-fit: cover;
+      background: #1e293b;
+      box-shadow: 0 15px 25px -10px rgba(0,0,0,0.5);
+    }
+    .user-info h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
     .user-info .username-handle { color: #60a5fa; font-weight: 500; font-size: 1rem; }
-    .user-bio { color: #cbd5e1; margin-top: 8px; max-width: 450px; }
+    .user-bio { color: #cbd5e1; margin-top: 8px; max-width: 520px; }
+
     .stats-badge { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1rem; }
-    .stat-pill { background: #0f172a; padding: 0.4rem 1rem; border-radius: 40px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500; border: 0.5px solid #334155; }
+    .stat-pill {
+      background: #0f172a;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 0.5px solid #334155;
+    }
     .stat-pill i { color: #3b82f6; width: 18px; }
-    .kpi-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-top: 1rem; flex: 1; }
-    .kpi-card { background: rgba(0,0,0,0.35); border-radius: 1.5rem; padding: 0.8rem 1.2rem; min-width: 110px; text-align: center; border-left: 3px solid #3b82f6; }
+
+    .kpi-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      margin-top: 1rem;
+      flex: 1;
+      min-width: 280px;
+    }
+    .kpi-card {
+      background: rgba(0,0,0,0.35);
+      border-radius: 1.5rem;
+      padding: 0.8rem 1.2rem;
+      min-width: 110px;
+      text-align: center;
+      border-left: 3px solid #3b82f6;
+      flex: 1;
+    }
     .kpi-number { font-size: 1.8rem; font-weight: 800; }
     .kpi-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
-    .dashboard-two { display: grid; grid-template-columns: 1fr 1.4fr; gap: 1.5rem; margin-bottom: 2rem; }
-    @media (max-width: 850px) { .dashboard-two { grid-template-columns: 1fr; gap: 1.5rem; } .profile-grid { flex-direction: column; align-items: start; } .kpi-row { width: 100%; } }
-    .section-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; border-left: 4px solid #3b82f6; padding-left: 12px; }
-    .lang-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; }
-    .lang-name { width: 100px; font-weight: 500; }
-    .lang-bar-bg { flex: 1; height: 8px; background: #1e293b; border-radius: 12px; overflow: hidden; }
-    .lang-bar-fill { height: 100%; background: #3b82f6; width: 0%; border-radius: 12px; transition: width 0.4s ease; }
+
+    .dashboard-two {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 850px) {
+      .dashboard-two { grid-template-columns: 1fr; gap: 1.5rem; }
+      .profile-grid { flex-direction: column; align-items: start; }
+      .kpi-row { width: 100%; }
+      .search-card { flex-wrap: wrap; padding: 1rem; }
+      .search-card input { width: 100%; order: 2; }
+      .search-card i { order: 1; }
+      .search-card button { order: 3; width: 100%; justify-content: center; }
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 12px;
+    }
+
+    .lang-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+    }
+    .lang-name { width: 110px; font-weight: 500; }
+    .lang-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .lang-bar-fill {
+      height: 100%;
+      background: #3b82f6;
+      width: 0%;
+      border-radius: 12px;
+      transition: width 0.4s ease;
+    }
     .lang-percent { width: 45px; text-align: right; color: #a5f3fc; }
+
     .activity-list { list-style: none; margin-top: 0.5rem; }
-    .activity-list li { background: rgba(0,0,0,0.25); margin-bottom: 0.7rem; padding: 0.7rem 1rem; border-radius: 1rem; font-size: 0.85rem; display: flex; align-items: center; gap: 12px; border-left: 3px solid #3b82f6; }
+    .activity-list li {
+      background: rgba(0,0,0,0.25);
+      margin-bottom: 0.7rem;
+      padding: 0.7rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-left: 3px solid #3b82f6;
+    }
     .activity-icon { width: 28px; text-align: center; color: #60a5fa; }
     .activity-text { flex: 1; }
-    .activity-time { font-size: 0.7rem; color: #94a3b8; }
-    .repo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
-    .repo-card { background: #0f172a80; border-radius: 1.2rem; padding: 1rem; transition: all 0.2s; border: 1px solid #1f2a44; }
-    .repo-card:hover { background: #111827cc; border-color: #3b82f6; transform: translateY(-3px); }
-    .repo-name { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .activity-time { font-size: 0.7rem; color: #94a3b8; white-space: nowrap; }
+
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .repo-card {
+      background: #0f172a80;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      transition: all 0.2s;
+      border: 1px solid #1f2a44;
+    }
+    .repo-card:hover {
+      background: #111827cc;
+      border-color: #3b82f6;
+      transform: translateY(-3px);
+    }
+    .repo-name {
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
     .repo-name a { color: #90cdf4; text-decoration: none; }
     .repo-name a:hover { text-decoration: underline; color: white; }
-    .repo-desc { font-size: 0.75rem; color: #9ca3af; margin: 8px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .repo-meta { display: flex; gap: 14px; font-size: 0.7rem; color: #b9c7db; margin-top: 8px; }
+    .repo-desc {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin: 8px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .repo-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.7rem;
+      color: #b9c7db;
+      margin-top: 8px;
+    }
     .repo-meta i { margin-right: 4px; }
-    .language-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3b82f6; margin-right: 4px; }
+    .language-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+      margin-right: 4px;
+    }
+
     .loading-spinner { text-align: center; padding: 3rem; }
     .fa-spin { font-size: 2rem; color: #3b82f6; }
-    .error-msg { background: rgba(220,38,38,0.2); border-left: 5px solid #ef4444; padding: 1rem; border-radius: 1rem; margin: 1rem 0; }
-    footer { text-align: center; margin-top: 3rem; font-size: 0.75rem; color: #4b5563; }
+    .error-msg {
+      background: rgba(220,38,38,0.2);
+      border-left: 5px solid #ef4444;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(148,163,184,0.25);
+      padding: 1.5rem;
+      text-align: center;
+      border-radius: 1.2rem;
+      color: #94a3b8;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: #4b5563;
+    }
   </style>
 </head>
 <body>
@@ -75,11 +338,17 @@
     <p>track GitHub presence · smart insights · modern clarity</p>
   </div>
 
-  <div class="search-card">
+  <form class="search-card" id="searchForm" autocomplete="off">
     <i class="fab fa-github"></i>
-    <input type="text" id="usernameInput" placeholder="GitHub username, e.g. 'octocat' or 'torvalds'" value="GGWarrior001">
-    <button id="trackBtn"><i class="fas fa-chart-line"></i> Track</button>
-  </div>
+    <input
+      type="text"
+      id="usernameInput"
+      placeholder="GitHub username, e.g. 'octocat' or 'torvalds'"
+      value="octocat"
+      aria-label="GitHub username"
+    >
+    <button type="submit" id="trackBtn"><i class="fas fa-chart-line"></i> Track</button>
+  </form>
 
   <div id="mainContent">
     <div class="loading-spinner" id="initialLoader">
@@ -87,279 +356,351 @@
       <p style="margin-top: 12px;">loading octocat profile...</p>
     </div>
   </div>
+
   <footer>
     <i class="fas fa-code-branch"></i> realtime GitHub data · public activity
   </footer>
 </div>
 
 <script>
-  (function() {
-    // DOM elements
-    const mainContainer = document.getElementById('mainContent');
-    const inputField = document.getElementById('usernameInput');
-    const trackBtn = document.getElementById('trackBtn');
+(() => {
+  const mainContainer = document.getElementById('mainContent');
+  const inputField = document.getElementById('usernameInput');
+  const trackBtn = document.getElementById('trackBtn');
+  const searchForm = document.getElementById('searchForm');
 
-    // Helper: format numbers
-    const formatCount = (num) => {
-      if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';
-      if (num >= 1_000) return (num / 1_000).toFixed(1) + 'k';
-      return num.toString();
-    };
+  let activeController = null;
 
-    // relative time
-    const timeAgo = (dateString) => {
-      const past = new Date(dateString);
-      const now = new Date();
-      const diffSec = Math.floor((now - past) / 1000);
-      if (diffSec < 60) return `${diffSec} sec ago`;
-      if (diffSec < 3600) return `${Math.floor(diffSec / 60)} min ago`;
-      if (diffSec < 86400) return `${Math.floor(diffSec / 3600)} hours ago`;
-      if (diffSec < 2592000) return `${Math.floor(diffSec / 86400)} days ago`;
-      return past.toLocaleDateString();
-    };
+  const escapeHtml = (value = '') =>
+    String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
 
-    // fetch wrapper with error handling
-    async function fetchGitHub(endpoint) {
-      const res = await fetch(`https://api.github.com${endpoint}`, {
-        headers: { 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || `HTTP ${res.status}`);
-      }
-      return res.json();
-    }
+  const formatCount = (num = 0) => {
+    const n = Number(num) || 0;
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
+    if (n >= 1_000) return (n / 1_000).toFixed(1) + 'k';
+    return n.toString();
+  };
 
-    // load all data
-    async function loadGitHubData(username) {
-      if (!username.trim()) throw new Error('Please enter a GitHub username');
-      const [user, repos, events] = await Promise.all([
-        fetchGitHub(`/users/${username}`),
-        fetchGitHub(`/users/${username}/repos?per_page=100&sort=updated`),
-        fetchGitHub(`/users/${username}/events?per_page=15`)
-      ]);
-      return { user, repos, events };
-    }
+  const timeAgo = (dateString) => {
+    const past = new Date(dateString);
+    if (Number.isNaN(past.getTime())) return 'unknown time';
+    const now = new Date();
+    const diffSec = Math.floor((now - past) / 1000);
 
-    // compute language distribution (by repo count)
-    function computeLanguages(repos) {
-      const langMap = new Map();
-      let totalWithLang = 0;
-      for (const repo of repos) {
-        if (repo.language) {
-          langMap.set(repo.language, (langMap.get(repo.language) || 0) + 1);
-          totalWithLang++;
-        }
-      }
-      const sorted = Array.from(langMap.entries()).sort((a, b) => b[1] - a[1]);
-      const top = sorted.slice(0, 5);
-      return { top, totalWithLang };
-    }
+    if (diffSec < 60) return `${diffSec} sec ago`;
+    if (diffSec < 3600) return `${Math.floor(diffSec / 60)} min ago`;
+    if (diffSec < 86400) return `${Math.floor(diffSec / 3600)} hours ago`;
+    if (diffSec < 2592000) return `${Math.floor(diffSec / 86400)} days ago`;
+    return past.toLocaleDateString();
+  };
 
-    // total stars & forks
-    function calcStats(repos) {
-      let stars = 0, forks = 0;
-      for (const r of repos) {
-        stars += r.stargazers_count || 0;
-        forks += r.forks_count || 0;
-      }
-      return { stars, forks };
-    }
-
-    // format events
-    function formatEvents(events, limit = 6) {
-      const interesting = events.filter(e => ['PushEvent', 'CreateEvent', 'IssuesEvent', 'PullRequestEvent', 'WatchEvent', 'ForkEvent'].includes(e.type));
-      return interesting.slice(0, limit).map(ev => {
-        let actionText = '';
-        const repoName = ev.repo.name;
-        switch (ev.type) {
-          case 'PushEvent':
-            const commits = ev.payload.commits?.length || 0;
-            actionText = `pushed ${commits} commit${commits !== 1 ? 's' : ''} to <strong>${repoName}</strong>`;
-            break;
-          case 'CreateEvent':
-            const refType = ev.payload.ref_type;
-            actionText = `created ${refType} <strong>${ev.payload.ref || repoName}</strong> in ${repoName}`;
-            break;
-          case 'IssuesEvent':
-            actionText = `${ev.payload.action} issue <strong>#${ev.payload.issue?.number}</strong> on ${repoName}`;
-            break;
-          case 'PullRequestEvent':
-            actionText = `${ev.payload.action} pull request on <strong>${repoName}</strong>`;
-            break;
-          case 'WatchEvent':
-            actionText = `starred <strong>${repoName}</strong>`;
-            break;
-          case 'ForkEvent':
-            actionText = `forked <strong>${repoName}</strong>`;
-            break;
-          default:
-            actionText = `performed ${ev.type} on ${repoName}`;
-        }
-        return {
-          text: actionText,
-          date: ev.created_at,
-          icon: ev.type === 'PushEvent' ? 'fa-code-branch' : (ev.type === 'CreateEvent' ? 'fa-plus-circle' : 'fa-clock')
-        };
-      });
-    }
-
-    // render UI (optimized: pre‑compute languages once)
-    function renderUI({ user, repos, events }) {
-      const sortedRepos = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
-      const { stars, forks } = calcStats(repos);
-      const langData = computeLanguages(repos); // computed once
-      const { top: topLanguages, totalWithLang } = langData;
-      const recentActivities = formatEvents(events, 5);
-
-      // profile
-      const profileHtml = `
-        <div class="profile-grid">
-          <div class="avatar-section">
-            <img class="avatar-img" src="${user.avatar_url}" alt="${user.login}" loading="lazy">
-            <div class="user-info">
-              <h2>${user.name || user.login} <span class="username-handle">@${user.login}</span></h2>
-              ${user.bio ? `<div class="user-bio">${user.bio}</div>` : '<div class="user-bio" style="opacity:0.6">No bio provided</div>'}
-              <div class="stats-badge">
-                <span class="stat-pill"><i class="fas fa-users"></i> ${formatCount(user.followers)} followers</span>
-                <span class="stat-pill"><i class="fas fa-user-plus"></i> ${formatCount(user.following)} following</span>
-                <span class="stat-pill"><i class="fas fa-code-branch"></i> ${user.public_repos} repos</span>
-                ${user.public_gists !== undefined ? `<span class="stat-pill"><i class="fas fa-file-code"></i> ${user.public_gists} gists</span>` : ''}
-              </div>
-            </div>
-          </div>
-          <div class="kpi-row">
-            <div class="kpi-card"><div class="kpi-number">${formatCount(stars)}</div><div class="kpi-label"><i class="fas fa-star"></i> total stars</div></div>
-            <div class="kpi-card"><div class="kpi-number">${formatCount(forks)}</div><div class="kpi-label"><i class="fas fa-code-fork"></i> total forks</div></div>
-            <div class="kpi-card"><div class="kpi-number">${repos.length}</div><div class="kpi-label"><i class="fas fa-database"></i> repos scanned</div></div>
-          </div>
-        </div>
-      `;
-
-      // languages
-      let languagesHtml = `<div class="card"><div class="section-title"><i class="fas fa-chart-simple"></i> Top languages</div>`;
-      if (topLanguages.length === 0) {
-        languagesHtml += `<div class="lang-item">No language data (or repos without languages)</div>`;
-      } else {
-        topLanguages.forEach(([lang, count]) => {
-          const percent = totalWithLang ? (count / totalWithLang * 100).toFixed(0) : 0;
-          languagesHtml += `
-            <div class="lang-item">
-              <span class="lang-name"><span class="language-dot" style="background: #3b82f6;"></span> ${lang}</span>
-              <div class="lang-bar-bg"><div class="lang-bar-fill" style="width: ${percent}%; background: #60a5fa;"></div></div>
-              <span class="lang-percent">${percent}%</span>
-            </div>
-          `;
-        });
-        if (topLanguages.length < langData.top.length) {
-          languagesHtml += `<div style="font-size:0.7rem; margin-top:8px;">+ ${langData.top.length - topLanguages.length} more</div>`;
-        }
-      }
-      languagesHtml += `</div>`;
-
-      // activity
-      let activityHtml = `<div class="card"><div class="section-title"><i class="fas fa-bolt"></i> recent activity</div><ul class="activity-list">`;
-      if (recentActivities.length === 0) {
-        activityHtml += `<li><i class="fas fa-info-circle"></i> No recent public events found</li>`;
-      } else {
-        recentActivities.forEach(act => {
-          activityHtml += `
-            <li>
-              <div class="activity-icon"><i class="fas ${act.icon || 'fa-code'}"></i></div>
-              <div class="activity-text">${act.text}</div>
-              <div class="activity-time">${timeAgo(act.date)}</div>
-            </li>
-          `;
-        });
-      }
-      activityHtml += `</ul></div>`;
-
-      // repos grid
-      let reposHtml = `<div style="margin-top: 1rem;"><div class="section-title"><i class="fas fa-book"></i> repositories (${sortedRepos.length} shown)</div><div class="repo-grid">`;
-      if (sortedRepos.length === 0) {
-        reposHtml += `<div class="card" style="grid-column:1/-1;">✨ No public repositories yet</div>`;
-      } else {
-        sortedRepos.slice(0, 18).forEach(repo => {
-          const langColor = repo.language ? '#3b82f6' : '#6b7280';
-          reposHtml += `
-            <div class="repo-card">
-              <div class="repo-name">
-                <i class="fab fa-github-alt" style="font-size:0.8rem;"></i>
-                <a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a>
-                ${repo.fork ? '<span style="font-size:0.6rem; background:#1e293b; padding:2px 6px; border-radius:20px;">fork</span>' : ''}
-              </div>
-              ${repo.description ? `<div class="repo-desc">${repo.description.substring(0, 85)}${repo.description.length > 85 ? '...' : ''}</div>` : '<div class="repo-desc" style="opacity:0.5;">— no description</div>'}
-              <div class="repo-meta">
-                ${repo.language ? `<span><span class="language-dot" style="background: ${langColor};"></span> ${repo.language}</span>` : ''}
-                <span><i class="far fa-star"></i> ${formatCount(repo.stargazers_count)}</span>
-                <span><i class="fas fa-code-fork"></i> ${formatCount(repo.forks_count)}</span>
-                <span><i class="far fa-calendar-alt"></i> ${timeAgo(repo.updated_at)}</span>
-              </div>
-            </div>
-          `;
-        });
-        if (sortedRepos.length > 18) {
-          reposHtml += `<div class="card" style="text-align:center; background: transparent;">+ ${sortedRepos.length - 18} more repositories · <a href="https://github.com/${user.login}?tab=repositories" target="_blank" style="color:#60a5fa;">view all on GitHub</a></div>`;
-        }
-      }
-      reposHtml += `</div></div>`;
-
-      return `${profileHtml}<div class="dashboard-two">${languagesHtml}${activityHtml}</div>${reposHtml}`;
-    }
-
-    // UI helpers
-    function showLoading() {
-      mainContainer.innerHTML = `<div class="loading-spinner"><i class="fas fa-circle-notch fa-spin"></i><p>fetching GitHub pulse ...</p></div>`;
-    }
-
-    function showError(message) {
-      mainContainer.innerHTML = `
-        <div class="error-msg">
-          <i class="fas fa-exclamation-triangle"></i> <strong>track error</strong><br>
-          ${message}<br><br>
-          <span style="font-size:0.8rem;">💡 tip: check username, rate limits (60 req/h for unauthenticated) or network.</span>
-        </div>
-        <div style="text-align:center; margin-top:1rem;">
-          <button id="retryBtn" style="background:#2563eb; border:none; padding:8px 20px; border-radius:40px; color:white; cursor:pointer;"><i class="fas fa-redo-alt"></i> retry</button>
-        </div>
-      `;
-      const retryBtn = document.getElementById('retryBtn');
-      if (retryBtn) retryBtn.addEventListener('click', () => performSearch(inputField.value.trim()));
-    }
-
-    // main search function
-    async function performSearch(username) {
-      if (!username) {
-        showError('Username cannot be empty');
-        return;
-      }
-      showLoading();
-      try {
-        const data = await loadGitHubData(username);
-        const rendered = renderUI(data);
-        mainContainer.innerHTML = rendered;
-      } catch (err) {
-        let friendlyMsg = err.message;
-        if (friendlyMsg.includes('404')) friendlyMsg = `User "${username}" not found on GitHub.`;
-        else if (friendlyMsg.includes('403')) friendlyMsg = `Rate limit exceeded or API restricted. Try again later or use a different username.`;
-        showError(friendlyMsg);
-      }
-    }
-
-    // initial load
-    const initialUser = 'GGWarrior001';
-    inputField.value = initialUser;
-    performSearch(initialUser);
-
-    // event listeners
-    trackBtn.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const val = inputField.value.trim();
-        if (val) performSearch(val);
-      }
+  async function fetchGitHub(endpoint, signal) {
+    const res = await fetch(`https://api.github.com${endpoint}`, {
+      signal,
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
     });
-  })();
+
+    if (!res.ok) {
+      let errData = {};
+      try { errData = await res.json(); } catch {}
+      throw new Error(errData.message || `HTTP ${res.status}`);
+    }
+
+    return res.json();
+  }
+
+  async function loadGitHubData(username) {
+    const clean = username.trim();
+    if (!clean) throw new Error('Please enter a GitHub username');
+
+    if (activeController) activeController.abort();
+    activeController = new AbortController();
+
+    const signal = activeController.signal;
+    const safeUsername = encodeURIComponent(clean);
+
+    const [user, repos, events] = await Promise.all([
+      fetchGitHub(`/users/${safeUsername}`, signal),
+      fetchGitHub(`/users/${safeUsername}/repos?per_page=100&sort=updated`, signal),
+      fetchGitHub(`/users/${safeUsername}/events?per_page=15`, signal)
+    ]);
+
+    return { user, repos, events };
+  }
+
+  function computeLanguages(repos) {
+    const langMap = new Map();
+    let totalWithLang = 0;
+
+    for (const repo of repos) {
+      if (repo.language) {
+        langMap.set(repo.language, (langMap.get(repo.language) || 0) + 1);
+        totalWithLang++;
+      }
+    }
+
+    const sorted = Array.from(langMap.entries()).sort((a, b) => b[1] - a[1]);
+    return { top: sorted.slice(0, 5), totalWithLang };
+  }
+
+  function calcStats(repos) {
+    return repos.reduce(
+      (acc, r) => {
+        acc.stars += r.stargazers_count || 0;
+        acc.forks += r.forks_count || 0;
+        return acc;
+      },
+      { stars: 0, forks: 0 }
+    );
+  }
+
+  function formatEvents(events, limit = 6) {
+    const interesting = events.filter(e =>
+      ['PushEvent', 'CreateEvent', 'IssuesEvent', 'PullRequestEvent', 'WatchEvent', 'ForkEvent'].includes(e.type)
+    );
+
+    return interesting.slice(0, limit).map(ev => {
+      const repoName = escapeHtml(ev.repo?.name || 'unknown repository');
+      let actionText = '';
+
+      switch (ev.type) {
+        case 'PushEvent': {
+          const commits = ev.payload?.commits?.length || 0;
+          actionText = `pushed ${commits} commit${commits !== 1 ? 's' : ''} to <strong>${repoName}</strong>`;
+          break;
+        }
+        case 'CreateEvent': {
+          const refType = escapeHtml(ev.payload?.ref_type || 'item');
+          const ref = escapeHtml(ev.payload?.ref || ev.repo?.name || 'repository');
+          actionText = `created ${refType} <strong>${ref}</strong> in ${repoName}`;
+          break;
+        }
+        case 'IssuesEvent':
+          actionText = `${escapeHtml(ev.payload?.action || 'updated')} issue <strong>#${escapeHtml(ev.payload?.issue?.number || '?')}</strong> on ${repoName}`;
+          break;
+        case 'PullRequestEvent':
+          actionText = `${escapeHtml(ev.payload?.action || 'updated')} pull request on <strong>${repoName}</strong>`;
+          break;
+        case 'WatchEvent':
+          actionText = `starred <strong>${repoName}</strong>`;
+          break;
+        case 'ForkEvent':
+          actionText = `forked <strong>${repoName}</strong>`;
+          break;
+        default:
+          actionText = `performed ${escapeHtml(ev.type)} on ${repoName}`;
+      }
+
+      return {
+        text: actionText,
+        date: ev.created_at,
+        icon: ev.type === 'PushEvent' ? 'fa-code-branch'
+            : ev.type === 'CreateEvent' ? 'fa-plus-circle'
+            : ev.type === 'WatchEvent' ? 'fa-star'
+            : ev.type === 'ForkEvent' ? 'fa-code-fork'
+            : 'fa-clock'
+      };
+    });
+  }
+
+  function renderUI({ user, repos, events }) {
+    const sortedRepos = [...repos].sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
+    const { stars, forks } = calcStats(repos);
+    const { top: topLanguages, totalWithLang } = computeLanguages(repos);
+    const recentActivities = formatEvents(events, 5);
+
+    const profileHtml = `
+      <div class="profile-grid">
+        <div class="avatar-section">
+          <img class="avatar-img" src="${escapeHtml(user.avatar_url)}" alt="${escapeHtml(user.login)}" loading="lazy">
+          <div class="user-info">
+            <h2>${escapeHtml(user.name || user.login)} <span class="username-handle">@${escapeHtml(user.login)}</span></h2>
+            ${
+              user.bio
+                ? `<div class="user-bio">${escapeHtml(user.bio)}</div>`
+                : '<div class="user-bio" style="opacity:0.6">No bio provided</div>'
+            }
+            <div class="stats-badge">
+              <span class="stat-pill"><i class="fas fa-users"></i> ${formatCount(user.followers)} followers</span>
+              <span class="stat-pill"><i class="fas fa-user-plus"></i> ${formatCount(user.following)} following</span>
+              <span class="stat-pill"><i class="fas fa-code-branch"></i> ${formatCount(user.public_repos)} repos</span>
+              ${
+                user.public_gists !== undefined
+                  ? `<span class="stat-pill"><i class="fas fa-file-code"></i> ${formatCount(user.public_gists)} gists</span>`
+                  : ''
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-number">${formatCount(stars)}</div>
+            <div class="kpi-label"><i class="fas fa-star"></i> total stars</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number">${formatCount(forks)}</div>
+            <div class="kpi-label"><i class="fas fa-code-fork"></i> total forks</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-number">${formatCount(repos.length)}</div>
+            <div class="kpi-label"><i class="fas fa-database"></i> repos scanned</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    let languagesHtml = `<div class="card"><div class="section-title"><i class="fas fa-chart-simple"></i> Top languages</div>`;
+    if (topLanguages.length === 0) {
+      languagesHtml += `<div class="empty-state">No language data found in public repositories.</div>`;
+    } else {
+      topLanguages.forEach(([lang, count]) => {
+        const percent = totalWithLang ? Math.round((count / totalWithLang) * 100) : 0;
+        languagesHtml += `
+          <div class="lang-item">
+            <span class="lang-name"><span class="language-dot"></span> ${escapeHtml(lang)}</span>
+            <div class="lang-bar-bg"><div class="lang-bar-fill" style="width: ${percent}%"></div></div>
+            <span class="lang-percent">${percent}%</span>
+          </div>
+        `;
+      });
+    }
+    languagesHtml += `</div>`;
+
+    let activityHtml = `<div class="card"><div class="section-title"><i class="fas fa-bolt"></i> recent activity</div><ul class="activity-list">`;
+    if (recentActivities.length === 0) {
+      activityHtml += `<li><i class="fas fa-info-circle activity-icon"></i><div class="activity-text">No recent public events found</div></li>`;
+    } else {
+      recentActivities.forEach(act => {
+        activityHtml += `
+          <li>
+            <div class="activity-icon"><i class="fas ${act.icon}"></i></div>
+            <div class="activity-text">${act.text}</div>
+            <div class="activity-time">${timeAgo(act.date)}</div>
+          </li>
+        `;
+      });
+    }
+    activityHtml += `</ul></div>`;
+
+    let reposHtml = `
+      <div style="margin-top: 1rem;">
+        <div class="section-title"><i class="fas fa-book"></i> repositories (${sortedRepos.length} shown)</div>
+        <div class="repo-grid">
+    `;
+
+    if (sortedRepos.length === 0) {
+      reposHtml += `<div class="empty-state">✨ No public repositories yet</div>`;
+    } else {
+      sortedRepos.slice(0, 18).forEach(repo => {
+        const lang = repo.language ? escapeHtml(repo.language) : '';
+        const desc = repo.description ? escapeHtml(repo.description) : '';
+        reposHtml += `
+          <div class="repo-card">
+            <div class="repo-name">
+              <i class="fab fa-github-alt" style="font-size:0.8rem;"></i>
+              <a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(repo.name)}</a>
+              ${repo.fork ? '<span style="font-size:0.6rem; background:#1e293b; padding:2px 6px; border-radius:20px;">fork</span>' : ''}
+            </div>
+            ${
+              desc
+                ? `<div class="repo-desc">${desc.length > 85 ? desc.slice(0, 85) + '...' : desc}</div>`
+                : '<div class="repo-desc" style="opacity:0.5;">— no description</div>'
+            }
+            <div class="repo-meta">
+              ${repo.language ? `<span><span class="language-dot"></span> ${lang}</span>` : ''}
+              <span><i class="far fa-star"></i> ${formatCount(repo.stargazers_count)}</span>
+              <span><i class="fas fa-code-fork"></i> ${formatCount(repo.forks_count)}</span>
+              <span><i class="far fa-calendar-alt"></i> ${timeAgo(repo.updated_at)}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      if (sortedRepos.length > 18) {
+        reposHtml += `
+          <div class="empty-state">
+            + ${sortedRepos.length - 18} more repositories ·
+            <a href="https://github.com/${encodeURIComponent(user.login)}?tab=repositories" target="_blank" rel="noopener noreferrer" style="color:#60a5fa;">view all on GitHub</a>
+          </div>
+        `;
+      }
+    }
+
+    reposHtml += `</div></div>`;
+
+    return `${profileHtml}<div class="dashboard-two">${languagesHtml}${activityHtml}</div>${reposHtml}`;
+  }
+
+  function showLoading(username) {
+    const safe = escapeHtml(username || 'profile');
+    mainContainer.innerHTML = `
+      <div class="loading-spinner">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <p style="margin-top: 12px;">fetching ${safe} profile...</p>
+      </div>
+    `;
+    trackBtn.disabled = true;
+  }
+
+  function showError(message) {
+    mainContainer.innerHTML = `
+      <div class="error-msg">
+        <i class="fas fa-exclamation-triangle"></i> <strong>track error</strong><br>
+        ${escapeHtml(message)}<br><br>
+        <span style="font-size:0.8rem;">💡 tip: check the username, rate limits, or your network connection.</span>
+      </div>
+      <div style="text-align:center; margin-top:1rem;">
+        <button id="retryBtn" style="background:#2563eb; border:none; padding:8px 20px; border-radius:40px; color:white; cursor:pointer;">
+          <i class="fas fa-redo-alt"></i> retry
+        </button>
+      </div>
+    `;
+    trackBtn.disabled = false;
+
+    const retryBtn = document.getElementById('retryBtn');
+    if (retryBtn) retryBtn.addEventListener('click', () => performSearch(inputField.value.trim()));
+  }
+
+  async function performSearch(username) {
+    const clean = username.trim();
+    if (!clean) {
+      showError('Username cannot be empty');
+      return;
+    }
+
+    showLoading(clean);
+
+    try {
+      const data = await loadGitHubData(clean);
+      mainContainer.innerHTML = renderUI(data);
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+
+      let friendlyMsg = err.message || 'Unknown error';
+      if (friendlyMsg.includes('404')) friendlyMsg = `User "${clean}" not found on GitHub.`;
+      else if (friendlyMsg.includes('403')) friendlyMsg = `Rate limit exceeded or API restricted. Try again later.`;
+      else if (friendlyMsg.includes('Failed to fetch')) friendlyMsg = 'Network error or blocked request.';
+      showError(friendlyMsg);
+    } finally {
+      trackBtn.disabled = false;
+    }
+  }
+
+  const initialUser = 'octocat';
+  inputField.value = initialUser;
+  performSearch(initialUser);
+
+  searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    performSearch(inputField.value.trim());
+  });
+})();
 </script>
 </body>
 </html>
