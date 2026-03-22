@@ -351,4 +351,15 @@
     inputField.value = initialUser;
     performSearch(initialUser);
 
-    // eve
+    // event listeners
+    trackBtn.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = inputField.value.trim();
+        if (val) performSearch(val);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
