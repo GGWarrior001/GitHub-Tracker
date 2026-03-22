@@ -30,3 +30,6 @@ A clean, real-time dashboard for tracking GitHub profiles. Enter any GitHub user
 - **Font Awesome 6** – icons for visual clarity.
 - **Google Fonts (Inter)** – modern typography.
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
