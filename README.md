@@ -2,8 +2,6 @@
 
 A clean, real-time dashboard for tracking GitHub profiles. Enter any GitHub username to see key stats, language distribution, recent activity, and a detailed repository list — all presented with a modern glass‑morphism UI.
 
-![Preview](https://via.placeholder.com/800x450?text=gitnetic+screenshot)  
-*(Replace with actual screenshot of your app)*
 
 ## ✨ Features
 
