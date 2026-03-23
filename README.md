@@ -2,6 +2,10 @@
 
 A clean, real-time dashboard for tracking GitHub profiles. Enter any GitHub username to see key stats, language distribution, recent activity, and a detailed repository list — all presented with a modern glass‑morphism UI.
 
+<p align="center">
+  <img src="![Image](https://github.com/user-attachments/assets/569699fe-b973-4266-8270-edd2f5c54443)" alt="App Screenshot" width="300">
+</p>
+
 
 ## ✨ Features
 
