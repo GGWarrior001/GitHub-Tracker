@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>gitnetic · modern GitHub tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -37,7 +37,7 @@
       align-items: center;
       gap: 12px;
     }
-    .hero h1 i { color: #3b82f6; font-size: 2.4rem; }
+    .hero h1 i { color: #3b82f6; -webkit-text-fill-color: #3b82f6; font-size: 2.4rem; }
     .hero p { color: #9ca3af; margin-top: 0.5rem; font-weight: 400; }
 
     .search-card {
@@ -350,10 +350,10 @@
     <button type="submit" id="trackBtn"><i class="fas fa-chart-line"></i> Track</button>
   </form>
 
-  <div id="mainContent">
+  <div id="mainContent" aria-live="polite" aria-atomic="false">
     <div class="loading-spinner" id="initialLoader">
       <i class="fas fa-circle-notch fa-spin"></i>
-      <p style="margin-top: 12px;">loading octocat profile...</p>
+      <p style="margin-top: 12px;">loading profile...</p>
     </div>
   </div>
 
@@ -564,7 +564,7 @@
         languagesHtml += `
           <div class="lang-item">
             <span class="lang-name"><span class="language-dot"></span> ${escapeHtml(lang)}</span>
-            <div class="lang-bar-bg"><div class="lang-bar-fill" style="width: ${percent}%"></div></div>
+            <div class="lang-bar-bg"><div class="lang-bar-fill" data-width="${percent}" style="width: 0%"></div></div>
             <span class="lang-percent">${percent}%</span>
           </div>
         `;
@@ -609,7 +609,7 @@
             </div>
             ${
               desc
-                ? `<div class="repo-desc">${desc.length > 85 ? desc.slice(0, 85) + '...' : desc}</div>`
+                ? `<div class="repo-desc">${desc}</div>`
                 : '<div class="repo-desc" style="opacity:0.5;">— no description</div>'
             }
             <div class="repo-meta">
@@ -679,6 +679,14 @@
     try {
       const data = await loadGitHubData(clean);
       mainContainer.innerHTML = renderUI(data);
+      // Trigger language bar animations after DOM is painted
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          mainContainer.querySelectorAll('.lang-bar-fill[data-width]').forEach(el => {
+            el.style.width = el.dataset.width + '%';
+          });
+        });
+      });
     } catch (err) {
       if (err.name === 'AbortError') return;
 
