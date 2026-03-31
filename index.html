@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>gitnetic · modern GitHub tracker</title>
+  <meta name="description" content="Track any GitHub profile with gitnetic — a modern dashboard showing stats, language distribution, recent activity, and repositories.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -408,7 +409,9 @@
     if (!res.ok) {
       let errData = {};
       try { errData = await res.json(); } catch {}
-      throw new Error(errData.message || `HTTP ${res.status}`);
+      const err = new Error(errData.message || `HTTP ${res.status}`);
+      err.status = res.status;
+      throw err;
     }
 
     return res.json();
@@ -590,7 +593,7 @@
 
     let reposHtml = `
       <div style="margin-top: 1rem;">
-        <div class="section-title"><i class="fas fa-book"></i> repositories (${sortedRepos.length} shown)</div>
+        <div class="section-title"><i class="fas fa-book"></i> repositories (${sortedRepos.length > 18 ? `18 of ${sortedRepos.length}` : sortedRepos.length} shown)</div>
         <div class="repo-grid">
     `;
 
@@ -657,7 +660,7 @@
       </div>
       <div style="text-align:center; margin-top:1rem;">
         <button id="retryBtn" style="background:#2563eb; border:none; padding:8px 20px; border-radius:40px; color:white; cursor:pointer;">
-          <i class="fas fa-redo-alt"></i> retry
+          <i class="fas fa-rotate-right"></i> retry
         </button>
       </div>
     `;
@@ -691,13 +694,13 @@
       if (err.name === 'AbortError') return;
 
       let friendlyMsg = err.message || 'Unknown error';
-      if (friendlyMsg.includes('404')) friendlyMsg = `User "${clean}" not found on GitHub.`;
-      else if (friendlyMsg.includes('403')) friendlyMsg = `Rate limit exceeded or API restricted. Try again later.`;
-      else if (friendlyMsg.includes('Failed to fetch')) friendlyMsg = 'Network error or blocked request.';
+      if (err.status === 404) friendlyMsg = `User "${clean}" not found on GitHub.`;
+      else if (err.status === 403) friendlyMsg = 'Rate limit exceeded or API restricted. Try again later.';
+      else if (err.status === 429) friendlyMsg = 'Secondary rate limit hit. Please wait before retrying.';
+      else if (err instanceof TypeError) friendlyMsg = 'Network error or blocked request.';
       showError(friendlyMsg);
-    } finally {
-      trackBtn.disabled = false;
     }
+    trackBtn.disabled = false;
   }
 
   const initialUser = 'GGWarrior001';
