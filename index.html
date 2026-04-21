@@ -371,6 +371,7 @@
   const searchForm = document.getElementById('searchForm');
 
   let activeController = null;
+  let latestRequestId = 0;
 
   const escapeHtml = (value = '') =>
     String(value)
@@ -392,11 +393,19 @@
     if (Number.isNaN(past.getTime())) return 'unknown time';
     const now = new Date();
     const diffSec = Math.floor((now - past) / 1000);
+    if (diffSec < 0) return 'just now';
 
     if (diffSec < 60) return `${diffSec} sec ago`;
-    if (diffSec < 3600) return `${Math.floor(diffSec / 60)} min ago`;
-    if (diffSec < 86400) return `${Math.floor(diffSec / 3600)} hours ago`;
-    if (diffSec < 2592000) return `${Math.floor(diffSec / 86400)} days ago`;
+
+    const minutes = Math.floor(diffSec / 60);
+    if (diffSec < 3600) return `${minutes} min${minutes === 1 ? '' : 's'} ago`;
+
+    const hours = Math.floor(diffSec / 3600);
+    if (diffSec < 86400) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+
+    const days = Math.floor(diffSec / 86400);
+    if (diffSec < 2592000) return `${days} day${days === 1 ? '' : 's'} ago`;
+
     return past.toLocaleDateString();
   };
 
@@ -427,13 +436,20 @@
     const signal = activeController.signal;
     const safeUsername = encodeURIComponent(clean);
 
-    const [user, repos, events] = await Promise.all([
+    const [userResult, reposResult, eventsResult] = await Promise.allSettled([
       fetchGitHub(`/users/${safeUsername}`, signal),
       fetchGitHub(`/users/${safeUsername}/repos?per_page=100&sort=updated`, signal),
       fetchGitHub(`/users/${safeUsername}/events?per_page=15`, signal)
     ]);
 
-    return { user, repos, events };
+    if (userResult.status === 'rejected') throw userResult.reason;
+    if (reposResult.status === 'rejected') throw reposResult.reason;
+
+    return {
+      user: userResult.value,
+      repos: reposResult.value,
+      events: eventsResult.status === 'fulfilled' ? eventsResult.value : []
+    };
   }
 
   function computeLanguages(repos) {
@@ -677,10 +693,12 @@
       return;
     }
 
+    const requestId = ++latestRequestId;
     showLoading(clean);
 
     try {
       const data = await loadGitHubData(clean);
+      if (requestId !== latestRequestId) return;
       mainContainer.innerHTML = renderUI(data);
       // Trigger language bar animations after DOM is painted
       requestAnimationFrame(() => {
@@ -692,6 +710,7 @@
       });
     } catch (err) {
       if (err.name === 'AbortError') return;
+      if (requestId !== latestRequestId) return;
 
       let friendlyMsg = err.message || 'Unknown error';
       if (err.status === 404) friendlyMsg = `User "${clean}" not found on GitHub.`;
@@ -699,8 +718,11 @@
       else if (err.status === 429) friendlyMsg = 'Secondary rate limit hit. Please wait before retrying.';
       else if (err instanceof TypeError) friendlyMsg = 'Network error or blocked request.';
       showError(friendlyMsg);
+    } finally {
+      if (requestId === latestRequestId) {
+        trackBtn.disabled = false;
+      }
     }
-    trackBtn.disabled = false;
   }
 
   const initialUser = 'GGWarrior001';
